@@ -3,7 +3,6 @@ package fr.ig2i.wifind.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -11,11 +10,13 @@ import android.widget.Toast;
 
 import fr.ig2i.wifind.R;
 import fr.ig2i.wifind.beans.Image;
+import fr.ig2i.wifind.beans.Mesure;
 import fr.ig2i.wifind.bootstrap.AppBootstrap;
 import fr.ig2i.wifind.bootstrap.BootstrapListener;
 import fr.ig2i.wifind.bootstrap.BootstrapTaskListener;
 import fr.ig2i.wifind.bootstrap.LoadMapTask;
 import fr.ig2i.wifind.core.Configuration;
+import fr.ig2i.wifind.core.JsonFactory;
 import fr.ig2i.wifind.core.WiFindApplication;
 
 /**
@@ -69,6 +70,8 @@ public class SplashScreenActivity extends Activity implements BootstrapListener 
             chargement = true;
             bootstrap = new AppBootstrap(this);
             bootstrap.setTextView((TextView) this.findViewById(R.id.loadingText));
+
+            //Log.d("", new JsonFactory<Mesure>(Mesure.class).serialize(new Mesure()).toString());
 
             //---- Ajouter ici toutes les taches de chargement.
             bootstrap.ajouterTache(new LoadMapTask(this.loadMapListener, carte));

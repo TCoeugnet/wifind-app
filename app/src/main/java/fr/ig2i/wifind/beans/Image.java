@@ -12,7 +12,7 @@ import fr.ig2i.wifind.core.ErrorHandler;
  */
 public class Image {
 
-    //TODO JsonSerializable
+    //TODO JsonFactory
 
     /**
      * Chemin/URL de l'image
