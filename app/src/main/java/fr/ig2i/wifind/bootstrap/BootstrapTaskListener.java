@@ -5,6 +5,6 @@ package fr.ig2i.wifind.bootstrap;
  */
 public interface BootstrapTaskListener<T> {
 
-    public void onComplete(T value);
+    public boolean onComplete(T value);
 
 }

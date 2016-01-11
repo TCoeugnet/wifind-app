@@ -29,8 +29,9 @@ public class ExampleTask implements BootstrapTask<String> {
     public BootstrapTaskListener<String> getTaskListener() {
         return new BootstrapTaskListener<String>() {
             @Override
-            public void onComplete(String value) {
+            public boolean onComplete(String value) {
                 Log.d("ExampleTask", value);
+                return true;
             }
         };
     }

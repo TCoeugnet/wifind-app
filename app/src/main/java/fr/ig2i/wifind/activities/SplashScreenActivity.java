@@ -2,13 +2,21 @@ package fr.ig2i.wifind.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.ig2i.wifind.R;
+import fr.ig2i.wifind.beans.Image;
 import fr.ig2i.wifind.bootstrap.AppBootstrap;
 import fr.ig2i.wifind.bootstrap.BootstrapListener;
-import fr.ig2i.wifind.bootstrap.ExampleTask;
+import fr.ig2i.wifind.bootstrap.BootstrapTaskListener;
+import fr.ig2i.wifind.bootstrap.LoadMapTask;
+import fr.ig2i.wifind.core.Configuration;
+import fr.ig2i.wifind.core.WiFindApplication;
 
 /**
  * Classe permettant de gérer le SplashScreen
@@ -33,10 +41,28 @@ public class SplashScreenActivity extends Activity implements BootstrapListener 
      */
     private static boolean charge = false;
 
+    private static Image carte = new Image("http://192.168.137.1:28423/Content/Images/3eme.jpg", "4b762c7490cbdb70129301714615f7a9", "Plan du 3eme");
+
+    private BootstrapTaskListener<Bitmap> loadMapListener = new BootstrapTaskListener<Bitmap>() {
+        @Override
+        public boolean onComplete(Bitmap value) {
+
+            //Si la carte est chargée
+            if(value != null) {
+                //Si tout s'est bien déroulé, la carte est enregistrée sur le téléphone et sera chargée à partir du cache au besoin
+                return true;
+            } else {
+                Toast.makeText(WiFindApplication.getContext(), Configuration.get("error-impossible-charger-carte", "Erreur chargement carte"), Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        WiFindApplication.setContext(this.getApplicationContext());
 
         //On ne relance pas le chargement lors du retour sur l'activité après une pause (en cas d'appui sur le bouton Back ou Home par ex.)
         if (!chargement) {
@@ -45,7 +71,12 @@ public class SplashScreenActivity extends Activity implements BootstrapListener 
             bootstrap.setTextView((TextView) this.findViewById(R.id.loadingText));
 
             //---- Ajouter ici toutes les taches de chargement.
-            bootstrap.ajouterTache(new ExampleTask());
+            bootstrap.ajouterTache(new LoadMapTask(this.loadMapListener, carte));
+
+            //Vérifier si le wifi est activé
+            //Récupérer position
+            //Récupérer carte
+            //Récupérer offres
 
             //----
 
@@ -78,5 +109,12 @@ public class SplashScreenActivity extends Activity implements BootstrapListener 
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         this.startActivity(intent);
         this.finish();
+    }
+
+    @Override
+    public void onError() {
+        Log.d("e", "ERROR LOADING IMAGE");
+
+        Log.d("e", "ERROR LOADING IMAGE");
     }
 }

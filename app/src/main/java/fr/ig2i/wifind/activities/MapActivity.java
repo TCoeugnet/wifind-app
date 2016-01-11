@@ -1,19 +1,31 @@
 package fr.ig2i.wifind.activities;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import fr.ig2i.wifind.R;
+import fr.ig2i.wifind.beans.Image;
+import fr.ig2i.wifind.core.Configuration;
+import fr.ig2i.wifind.core.ImageLoader;
+import fr.ig2i.wifind.core.WiFindApplication;
+import fr.ig2i.wifind.listeners.LoadImageListener;
 
 
-public class MapActivity extends ActionBarActivity {
+public class MapActivity extends ActionBarActivity implements LoadImageListener {
+
+    public static Bitmap bmp = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        ((ImageView)this.findViewById(R.id.imageView)).setImageBitmap(bmp);
     }
 
 
@@ -37,5 +49,10 @@ public class MapActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBitmapLoaded(Image image, Bitmap bmp) {
+        ((ImageView)this.findViewById(R.id.imageView)).setImageBitmap(bmp);
     }
 }

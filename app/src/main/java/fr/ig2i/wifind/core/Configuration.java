@@ -33,12 +33,16 @@ public class Configuration {
      */
     private static Properties config = null;
 
+    private static void init() {
+        init(WiFindApplication.getContext());
+    }
+
     /**
      * Initialiser le module de configuration
      */
-    private static void init() {
+    private static void init(Context appContext) {
         //Il est possible que le contexte n'ait pas été initialisé
-        Context context = WiFindApplication.getContext();
+        Context context = appContext;
 
         if(context != null) {
             Resources resources = context.getResources();
@@ -80,7 +84,7 @@ public class Configuration {
                 ErrorHandler.continuer(String.format("Configuration chargée mais clé '%s' non définie.", cle));
             }
         }
-        return valeur == null ? valeur : defaut;
+        return valeur == null ? defaut : valeur;
     }
 
 }
