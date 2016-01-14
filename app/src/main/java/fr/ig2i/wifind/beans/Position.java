@@ -5,7 +5,7 @@ import fr.ig2i.wifind.annotations.Serializable;
 /**
  * Created by Thomas on 11/01/2016.
  * @author Thomas Coeugnet
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class Position {
 
@@ -15,11 +15,20 @@ public class Position {
     @Serializable
     private float x = 0;
 
+    @Serializable
+    public int id = 0;
+
     /**
      * Position Y
      */
     @Serializable
     private float y = 0;
+
+    /**
+     * Etage
+     */
+    @Serializable
+    private Etage etage = null;
 
     /**
      * Obtenir la coordonnée X
@@ -54,6 +63,22 @@ public class Position {
     }
 
     /**
+     * Obtenir l'etage
+     * @return
+     */
+    public Etage getEtage() {
+        return etage;
+    }
+
+    /**
+     * Modifier l'etage
+     * @param etage
+     */
+    public void setEtage(Etage etage) {
+        this.etage = etage;
+    }
+
+    /**
      * Constructeur
      */
     public Position() {
@@ -68,5 +93,14 @@ public class Position {
     public Position(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                ", etage=" + etage +
+                '}';
     }
 }

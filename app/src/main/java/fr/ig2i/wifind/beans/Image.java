@@ -3,30 +3,33 @@ package fr.ig2i.wifind.beans;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.ig2i.wifind.annotations.Serializable;
+import fr.ig2i.wifind.core.API;
 import fr.ig2i.wifind.core.ErrorHandler;
 
 /**
  * Created by Thomas on 10/01/2016.
  * @author Thomas Coeugnet
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class Image {
-
-    //TODO JsonFactory
 
     /**
      * Chemin/URL de l'image
      */
+    @Serializable
     private String chemin;
 
     /**
      * Hash des données de l'image. Utilisé pour trouver les doublons et faire fonctionner le cache.
      */
+    @Serializable
     private String hash;
 
     /**
      * Description de l'image
      */
+    @Serializable
     private String description;
 
     /**
@@ -39,7 +42,7 @@ public class Image {
      * @return Chemin de l'image
      */
     public String getChemin() {
-        return chemin;
+        return API.GetBaseURL() + chemin;
     }
 
     /**
@@ -111,17 +114,18 @@ public class Image {
     }
 
     /**
-     * Création d'un objet Image à partir de JSON
-     * @param obj Représentation JSON de l'Image
-     * @throws JSONException
+     * Constructeur
      */
-    public Image(JSONObject obj) {
-        try {
-            this.chemin = obj.getString("chemin");
-            this.hash = obj.getString("hash");
-            this.description = obj.getString("description");
-        } catch (JSONException exc) {
-            ErrorHandler.continuer(String.format("Impossible de créer l'objet Image à partir de l'objet JSON '%s'.", obj.toString()), exc);
-        }
+    public Image() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "description='" + description + '\'' +
+                ", chemin='" + chemin + '\'' +
+                ", hash='" + hash + '\'' +
+                '}';
     }
 }

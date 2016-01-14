@@ -51,11 +51,17 @@ public class LoadMapTask implements BootstrapTask<Bitmap> {
      * Constructeur
      *
      * @param listener
+     */
+    public LoadMapTask(BootstrapTaskListener<Bitmap> listener) {
+        this.listener = listener; //Le listener a appeler lorsque la tâche est terminée
+    }
+
+    /**
+     * Modifier l'image à charger
      * @param image
      */
-    public LoadMapTask(BootstrapTaskListener<Bitmap> listener, Image image) {
-        this.listener = listener; //Le listener a appeler lorsque la tâche est terminée
-        this.image = image; //L'image a charger
+    public void setImage(Image image) {
+        this.image = image;
     }
 
 
@@ -84,6 +90,7 @@ public class LoadMapTask implements BootstrapTask<Bitmap> {
         if (this.image != null) {
             loader.asyncLoad(this.image); //Chargement asynchrone
         } else {
+            ErrorHandler.continuer("L'image a charger vaut (null).");
             return null; //On renvoie null si l'image a charger n'est pas valide
         }
 

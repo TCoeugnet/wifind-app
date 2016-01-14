@@ -7,10 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import fr.ig2i.wifind.R;
 import fr.ig2i.wifind.beans.Image;
+import fr.ig2i.wifind.beans.Position;
 import fr.ig2i.wifind.core.Configuration;
 import fr.ig2i.wifind.core.ImageLoader;
+import fr.ig2i.wifind.core.JsonFactory;
 import fr.ig2i.wifind.core.WiFindApplication;
 import fr.ig2i.wifind.listeners.LoadImageListener;
 
@@ -25,7 +30,11 @@ public class MapActivity extends ActionBarActivity implements LoadImageListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        ((ImageView)this.findViewById(R.id.imageView)).setImageBitmap(bmp);
+        try {
+            new ImageLoader(this).asyncLoad(new JsonFactory<Position>(Position.class).unserialize(new JSONObject(getIntent().getSerializableExtra("position").toString())).getEtage().getPlan().getImage());
+        } catch (JSONException exc) {
+            exc.printStackTrace();
+        }
     }
 
 

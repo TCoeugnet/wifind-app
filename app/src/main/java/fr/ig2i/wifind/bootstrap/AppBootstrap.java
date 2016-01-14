@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import fr.ig2i.wifind.core.Configuration;
 import fr.ig2i.wifind.core.ErrorHandler;
@@ -18,6 +19,11 @@ import fr.ig2i.wifind.core.ErrorHandler;
 public class AppBootstrap {
 
     //TODO : Implémenter un resume() pour reprendre le chargement après correction de l'erreur
+
+    /**
+     * Utilisé pour bien rester synchro entre les threads et attendre l'execution du onComplete avant de poursuivre
+     */
+    private CountDownLatch lock = new CountDownLatch(1);
 
     /**
      * Le listener appelé lors de la réussite du chargement ou lors d'une erreur
@@ -69,8 +75,14 @@ public class AppBootstrap {
 
             //On charge séquentiellement les tâches
             for (BootstrapTask tache : AppBootstrap.this.taches) {
+                lock = new CountDownLatch(1);
+
                 this.publishProgress("statut", tache.getNom()); //On retourne sur le thread UI car mise à jour d'une textview
                 this.publishProgress("complete", tache.charger(), tache.getTaskListener()); //On doit retourner sur le thread UI car on peut avoir à modifier des vues (cf listener)
+
+                try {
+                    lock.await(); //On attend la synchro
+                } catch(InterruptedException exc ) {}
 
                 if (AppBootstrap.this.stoppe) { //Si on a stoppe le chargement, on ne charge pas les autres
                     break;
@@ -109,6 +121,7 @@ public class AppBootstrap {
                     }
                     //onComplete renverra false si une erreur est survenue.
                     //On met donc stoppe a true en cas d'erreur, ce qui stoppera la file de chargement et executera onError du listener principal
+                    lock.countDown(); //On peut poursuivre sur l'autre thread
                     break;
                 }
             }
