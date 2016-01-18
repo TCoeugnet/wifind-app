@@ -5,7 +5,7 @@ import fr.ig2i.wifind.annotations.Serializable;
 /**
  * Created by Thomas on 13/01/2016.
  * @author Thomas Coeugnet
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class Etage {
 
@@ -20,6 +20,13 @@ public class Etage {
      */
     @Serializable
     private Plan plan = null;
+
+    /**
+     * Centre commercial contenant l'étage
+
+     */
+    @Serializable
+    private CentreCommercial centreCommercial = null;
 
     /**
      * Obtenir le niveau
@@ -51,6 +58,22 @@ public class Etage {
      */
     public void setPlan(Plan plan) {
         this.plan = plan;
+    }
+
+    /**
+     * Obtenir le centre commercial
+     * @return le centre commercial
+     */
+    public CentreCommercial getCentreCommercial() {
+        return centreCommercial;
+    }
+
+    /**
+     * Modifier le centre commercial
+     * @param centreCommercial le centre commercial
+     */
+    public void setCentreCommercial(CentreCommercial centreCommercial) {
+        this.centreCommercial = centreCommercial;
     }
 
     @Override

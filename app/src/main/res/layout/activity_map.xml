@@ -2,10 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context=".MapActivity">
 
-    <ImageView
+    <fr.ig2i.wifind.views.MapImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:scaleType="center" />
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/imageButton"
+        android:src="@mipmap/bouton_centrer_presse"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="70dp"
+        android:background="@null"
+        android:onClick="onClickCentrer"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"/>
+
 </RelativeLayout>

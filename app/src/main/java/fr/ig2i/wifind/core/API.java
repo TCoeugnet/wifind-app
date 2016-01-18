@@ -5,10 +5,18 @@ package fr.ig2i.wifind.core;
  */
 public class API {
 
-    //TODO A compléter
+    public static String Env = "SharedConnection";
 
     public static String GetBaseURL() {
-        return "http://192.168.137.1:28423";
+        switch(Env) {
+            case "Home":
+                return "http://192.168.1.24";
+            case "SharedConnection":
+                return "http://192.168.137.1:80";
+            case "Internet":
+            default:
+                return "http://wifind.no-ip.org";
+        }
     }
 
 }

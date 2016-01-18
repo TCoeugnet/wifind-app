@@ -14,6 +14,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,10 +71,15 @@ public class AsyncHttpRequest {
         }
     };
 
+    final static HttpParams httpParams = new BasicHttpParams();
     /**
      * Client utilisé pour envoyer les requêtes
      */
-    private static HttpClient client = new DefaultHttpClient();
+    private static HttpClient client;
+    static {
+        HttpConnectionParams.setConnectionTimeout(httpParams, 10000); //Timeout 10 secondes
+        client = new DefaultHttpClient(httpParams);
+    }
 
     /**
      * Listener appelé lorsqu'une réponse arrive

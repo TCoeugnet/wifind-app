@@ -2,4 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="pin_inner_diameter">50px</dimen>
+    <dimen name="pin_inner_border">7px</dimen>
+    <dimen name="pin_shadow_width">7px</dimen>
+    <dimen name="pin_outer_diameter">90px</dimen>
 </resources>
